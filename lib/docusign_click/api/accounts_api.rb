@@ -763,16 +763,16 @@ module DocuSign_Click
       # verify the required parameter 'clickwrap_id' is set
       fail ArgumentError, "Missing the required parameter 'clickwrap_id' when calling AccountsApi.get_clickwrap_agreements" if clickwrap_id.nil?
       # verify the required parameter 'client_user_id' is set
-      fail ArgumentError, "Missing the required parameter 'client_user_id' when calling AccountsApi.get_clickwrap_agreements" if client_user_id.nil?
+      fail ArgumentError, "Missing the required parameter 'client_user_id' when calling AccountsApi.get_clickwrap_agreements" if (options.nil? or options.client_user_id.nil?)
       # verify the required parameter 'status' is set
-      fail ArgumentError, "Missing the required parameter 'status' when calling AccountsApi.get_clickwrap_agreements" if status.nil?
+      fail ArgumentError, "Missing the required parameter 'status' when calling AccountsApi.get_clickwrap_agreements" if (options.nil? or options.status.nil?)
       # resource path
       local_var_path = "/v1/accounts/{accountId}/clickwraps/{clickwrapId}/users".sub('{format}','json').sub('{' + 'accountId' + '}', account_id.to_s).sub('{' + 'clickwrapId' + '}', clickwrap_id.to_s)
 
       # query parameters
       query_params = {}
-      query_params[:'client_user_id'] = client_user_id
-      query_params[:'status'] = status
+      query_params[:'client_user_id'] = options.client_user_id
+      query_params[:'status'] = options.status
       query_params[:'from_date'] = options.from_date if !options.from_date.nil?
       query_params[:'page_number'] = options.page_number if !options.page_number.nil?
       query_params[:'to_date'] = options.to_date if !options.to_date.nil?
@@ -888,13 +888,13 @@ module DocuSign_Click
       # verify the required parameter 'version_id' is set
       fail ArgumentError, "Missing the required parameter 'version_id' when calling AccountsApi.get_clickwrap_version_agreements" if version_id.nil?
       # verify the required parameter 'client_user_id' is set
-      fail ArgumentError, "Missing the required parameter 'client_user_id' when calling AccountsApi.get_clickwrap_version_agreements" if client_user_id.nil?
+      fail ArgumentError, "Missing the required parameter 'client_user_id' when calling AccountsApi.get_clickwrap_version_agreements" if (options.nil? or options.client_user_id.nil?)
       # resource path
       local_var_path = "/v1/accounts/{accountId}/clickwraps/{clickwrapId}/versions/{versionId}/users".sub('{format}','json').sub('{' + 'accountId' + '}', account_id.to_s).sub('{' + 'clickwrapId' + '}', clickwrap_id.to_s).sub('{' + 'versionId' + '}', version_id.to_s)
 
       # query parameters
       query_params = {}
-      query_params[:'client_user_id'] = client_user_id
+      query_params[:'client_user_id'] = options.client_user_id
       query_params[:'from_date'] = options.from_date if !options.from_date.nil?
       query_params[:'page_number'] = options.page_number if !options.page_number.nil?
       query_params[:'status'] = options.status if !options.status.nil?
@@ -954,13 +954,13 @@ module DocuSign_Click
       # verify the required parameter 'version_number' is set
       fail ArgumentError, "Missing the required parameter 'version_number' when calling AccountsApi.get_clickwrap_version_agreements_by_number" if version_number.nil?
       # verify the required parameter 'client_user_id' is set
-      fail ArgumentError, "Missing the required parameter 'client_user_id' when calling AccountsApi.get_clickwrap_version_agreements_by_number" if client_user_id.nil?
+      fail ArgumentError, "Missing the required parameter 'client_user_id' when calling AccountsApi.get_clickwrap_version_agreements_by_number" if (options.nil? or options.client_user_id.nil?)
       # resource path
       local_var_path = "/v1/accounts/{accountId}/clickwraps/{clickwrapId}/versions/{versionNumber}/users".sub('{format}','json').sub('{' + 'accountId' + '}', account_id.to_s).sub('{' + 'clickwrapId' + '}', clickwrap_id.to_s).sub('{' + 'versionNumber' + '}', version_number.to_s)
 
       # query parameters
       query_params = {}
-      query_params[:'client_user_id'] = client_user_id
+      query_params[:'client_user_id'] = options.client_user_id
       query_params[:'from_date'] = options.from_date if !options.from_date.nil?
       query_params[:'page_number'] = options.page_number if !options.page_number.nil?
       query_params[:'status'] = options.status if !options.status.nil?
