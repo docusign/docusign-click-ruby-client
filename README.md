@@ -1,4 +1,4 @@
-# The Official DocuSign Ruby Client
+# The Official DocuSign Click Ruby Client
 
 [![RubyGems version][rubygems-image]][rubygems-url]
 [![RubyGems downloads][downloads-image]][downloads-url]
