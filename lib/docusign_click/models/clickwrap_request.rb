@@ -25,7 +25,10 @@ module DocuSign_Click
     attr_accessor :fields_to_null
 
     # 
-    attr_accessor :is_majorversion
+    attr_accessor :is_major_version
+
+    # 
+    attr_accessor :is_shared
 
     # 
     attr_accessor :name
@@ -54,7 +57,8 @@ module DocuSign_Click
         :'display_settings' => :'displaySettings',
         :'documents' => :'documents',
         :'fields_to_null' => :'fieldsToNull',
-        :'is_majorversion' => :'isMajorversion',
+        :'is_major_version' => :'isMajorVersion',
+        :'is_shared' => :'isShared',
         :'name' => :'name',
         :'require_reacceptance' => :'requireReacceptance',
         :'scheduled_date' => :'scheduledDate',
@@ -72,7 +76,8 @@ module DocuSign_Click
         :'display_settings' => :'DisplaySettings',
         :'documents' => :'Array<Document>',
         :'fields_to_null' => :'String',
-        :'is_majorversion' => :'BOOLEAN',
+        :'is_major_version' => :'BOOLEAN',
+        :'is_shared' => :'BOOLEAN',
         :'name' => :'String',
         :'require_reacceptance' => :'BOOLEAN',
         :'scheduled_date' => :'Object',
@@ -109,8 +114,12 @@ module DocuSign_Click
         self.fields_to_null = attributes[:'fieldsToNull']
       end
 
-      if attributes.has_key?(:'isMajorversion')
-        self.is_majorversion = attributes[:'isMajorversion']
+      if attributes.has_key?(:'isMajorVersion')
+        self.is_major_version = attributes[:'isMajorVersion']
+      end
+
+      if attributes.has_key?(:'isShared')
+        self.is_shared = attributes[:'isShared']
       end
 
       if attributes.has_key?(:'name')
@@ -164,7 +173,8 @@ module DocuSign_Click
           display_settings == o.display_settings &&
           documents == o.documents &&
           fields_to_null == o.fields_to_null &&
-          is_majorversion == o.is_majorversion &&
+          is_major_version == o.is_major_version &&
+          is_shared == o.is_shared &&
           name == o.name &&
           require_reacceptance == o.require_reacceptance &&
           scheduled_date == o.scheduled_date &&
@@ -183,7 +193,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [clickwrap_name, display_settings, documents, fields_to_null, is_majorversion, name, require_reacceptance, scheduled_date, scheduled_reacceptance, status, transfer_from_user_id, transfer_to_user_id].hash
+      [clickwrap_name, display_settings, documents, fields_to_null, is_major_version, is_shared, name, require_reacceptance, scheduled_date, scheduled_reacceptance, status, transfer_from_user_id, transfer_to_user_id].hash
     end
 
     # Builds the object from hash
