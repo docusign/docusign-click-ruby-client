@@ -36,7 +36,6 @@ LICENSE
 Gemfile
 Gemfile.lock
 Rakefile
-docusign_click.gemspec
 
 
 # Specific src and test files
@@ -44,6 +43,3 @@ docusign_click.gemspec
 docs/
 spec/
 tests/
-lib/docusign_click/client/
-lib/docusign_click/api_error.rb
-lib/docusign_click/api_client.rb

@@ -40,6 +40,15 @@ module DocuSign_Click
     end
   end
 
+  class GetAgreementPdfOptions
+    # 
+    attr_accessor :include_coc
+
+    def self.default
+      @@default ||= GetAgreementPdfOptions.new
+    end
+  end
+
   class GetClickwrapAgreementsOptions
     # 
     attr_accessor :client_user_id
@@ -82,39 +91,21 @@ module DocuSign_Click
     end
   end
 
-  class GetClickwrapVersionAgreementsByNumberOptions
-    # 
-    attr_accessor :client_user_id
-
-    # 
-    attr_accessor :from_date
-
-    # 
-    attr_accessor :page_number
-
-    # 
-    attr_accessor :status
-
-    # 
-    attr_accessor :to_date
-
-    def self.default
-      @@default ||= GetClickwrapVersionAgreementsByNumberOptions.new
-    end
-  end
-
   class GetClickwrapsOptions
     # 
+    attr_accessor :filter
+
+    # 
     attr_accessor :from_date
+
+    # 
+    attr_accessor :name
 
     # 
     attr_accessor :owner_user_id
 
     # 
     attr_accessor :page_number
-
-    # 
-    attr_accessor :shared
 
     # 
     attr_accessor :status
@@ -409,63 +400,6 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Delete a Clickwrap version specified by versionNumber. Use versionId instead of versionNumber
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_number 
-    # @return [ClickwrapVersionSummaryResponse]
-    def delete_clickwrap_version_by_number(account_id, clickwrap_id, version_number)
-      data, _status_code, _headers = delete_clickwrap_version_by_number_with_http_info(account_id, clickwrap_id, version_number)
-      return data
-    end
-
-    # Delete a Clickwrap version specified by versionNumber. Use versionId instead of versionNumber
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_number 
-    # @return [Array<(ClickwrapVersionSummaryResponse, Fixnum, Hash)>] ClickwrapVersionSummaryResponse data, response status code and response headers
-    def delete_clickwrap_version_by_number_with_http_info(account_id, clickwrap_id, version_number)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: AccountsApi.delete_clickwrap_version_by_number ..."
-      end
-      # verify the required parameter 'account_id' is set
-      fail ArgumentError, "Missing the required parameter 'account_id' when calling AccountsApi.delete_clickwrap_version_by_number" if account_id.nil?
-      # verify the required parameter 'clickwrap_id' is set
-      fail ArgumentError, "Missing the required parameter 'clickwrap_id' when calling AccountsApi.delete_clickwrap_version_by_number" if clickwrap_id.nil?
-      # verify the required parameter 'version_number' is set
-      fail ArgumentError, "Missing the required parameter 'version_number' when calling AccountsApi.delete_clickwrap_version_by_number" if version_number.nil?
-      # resource path
-      local_var_path = "/v1/accounts/{accountId}/clickwraps/{clickwrapId}/versions/{versionNumber}".sub('{format}','json').sub('{' + 'accountId' + '}', account_id.to_s).sub('{' + 'clickwrapId' + '}', clickwrap_id.to_s).sub('{' + 'versionNumber' + '}', version_number.to_s)
-
-      # query parameters
-      query_params = {}
-
-      # header parameters
-      header_params = {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-
-      # form parameters
-      form_params = {}
-
-      # http body (model)
-      post_body = nil
-      auth_names = []
-      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path,
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => 'ClickwrapVersionSummaryResponse')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AccountsApi#delete_clickwrap_version_by_number\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
     # Deletes the versions specified by query parameter clickwrapVersionIds for a clickwrap, or all versions if no query parameter is specified. It will not delete if a version is active.
     # 
     # @param account_id 
@@ -574,7 +508,7 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # 
+    # Gets the agreement by a provided agreement ID
     # 
     # @param account_id 
     # @param agreement_id 
@@ -585,7 +519,7 @@ module DocuSign_Click
       return data
     end
 
-    # 
+    # Gets the agreement by a provided agreement ID
     # 
     # @param account_id 
     # @param agreement_id 
@@ -631,24 +565,26 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # 
+    # Downloads the agreement PDF and optionally certificate of completion.
     # 
     # @param account_id 
     # @param agreement_id 
     # @param clickwrap_id 
-    # @return [nil]
-    def get_agreement_pdf(account_id, agreement_id, clickwrap_id)
-      get_agreement_pdf_with_http_info(account_id, agreement_id, clickwrap_id)
-      return nil
+    # @param DocuSign_Click::GetAgreementPdfOptions Options for modifying the behavior of the function.
+    # @return [File]
+    def get_agreement_pdf(account_id, agreement_id, clickwrap_id, options = DocuSign_Click::GetAgreementPdfOptions.default)
+      data, _status_code, _headers = get_agreement_pdf_with_http_info(account_id, agreement_id, clickwrap_id, options)
+      return data
     end
 
-    # 
+    # Downloads the agreement PDF and optionally certificate of completion.
     # 
     # @param account_id 
     # @param agreement_id 
     # @param clickwrap_id 
-    # @return [Array<(nil, Fixnum, Hash)>] nil, response status code and response headers
-    def get_agreement_pdf_with_http_info(account_id, agreement_id, clickwrap_id)
+    # @param DocuSign_Click::GetAgreementPdfOptions Options for modifying the behavior of the function.
+    # @return [Array<(File, Fixnum, Hash)>] File data, response status code and response headers
+    def get_agreement_pdf_with_http_info(account_id, agreement_id, clickwrap_id, options = DocuSign_Click::GetAgreementPdfOptions.default)
       if @api_client.config.debugging
         @api_client.config.logger.debug "Calling API: AccountsApi.get_agreement_pdf ..."
       end
@@ -663,11 +599,12 @@ module DocuSign_Click
 
       # query parameters
       query_params = {}
+      query_params[:'include_coc'] = options.include_coc if !options.include_coc.nil?
 
       # header parameters
       header_params = {}
       # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+      header_params['Accept'] = @api_client.select_header_accept(['application/pdf'])
 
       # form parameters
       form_params = {}
@@ -680,7 +617,8 @@ module DocuSign_Click
         :query_params => query_params,
         :form_params => form_params,
         :body => post_body,
-        :auth_names => auth_names)
+        :auth_names => auth_names,
+        :return_type => 'File')
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AccountsApi#get_agreement_pdf\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
@@ -740,7 +678,7 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets the Clickwraps for an account
+    # Gets the agreement responses for a clickwrap
     # 
     # @param account_id 
     # @param clickwrap_id 
@@ -751,7 +689,7 @@ module DocuSign_Click
       return data
     end
 
-    # Gets the Clickwraps for an account
+    # Gets the agreement responses for a clickwrap
     # 
     # @param account_id 
     # @param clickwrap_id 
@@ -921,127 +859,6 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets the agreement responses for a clickwrap version
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_number 
-    # @param DocuSign_Click::GetClickwrapVersionAgreementsByNumberOptions Options for modifying the behavior of the function.
-    # @return [ClickwrapAgreementsResponse]
-    def get_clickwrap_version_agreements_by_number(account_id, clickwrap_id, version_number, options = DocuSign_Click::GetClickwrapVersionAgreementsByNumberOptions.default)
-      data, _status_code, _headers = get_clickwrap_version_agreements_by_number_with_http_info(account_id, clickwrap_id, version_number, options)
-      return data
-    end
-
-    # Gets the agreement responses for a clickwrap version
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_number 
-    # @param DocuSign_Click::GetClickwrapVersionAgreementsByNumberOptions Options for modifying the behavior of the function.
-    # @return [Array<(ClickwrapAgreementsResponse, Fixnum, Hash)>] ClickwrapAgreementsResponse data, response status code and response headers
-    def get_clickwrap_version_agreements_by_number_with_http_info(account_id, clickwrap_id, version_number, options = DocuSign_Click::GetClickwrapVersionAgreementsByNumberOptions.default)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: AccountsApi.get_clickwrap_version_agreements_by_number ..."
-      end
-      # verify the required parameter 'account_id' is set
-      fail ArgumentError, "Missing the required parameter 'account_id' when calling AccountsApi.get_clickwrap_version_agreements_by_number" if account_id.nil?
-      # verify the required parameter 'clickwrap_id' is set
-      fail ArgumentError, "Missing the required parameter 'clickwrap_id' when calling AccountsApi.get_clickwrap_version_agreements_by_number" if clickwrap_id.nil?
-      # verify the required parameter 'version_number' is set
-      fail ArgumentError, "Missing the required parameter 'version_number' when calling AccountsApi.get_clickwrap_version_agreements_by_number" if version_number.nil?
-      # resource path
-      local_var_path = "/v1/accounts/{accountId}/clickwraps/{clickwrapId}/versions/{versionNumber}/users".sub('{format}','json').sub('{' + 'accountId' + '}', account_id.to_s).sub('{' + 'clickwrapId' + '}', clickwrap_id.to_s).sub('{' + 'versionNumber' + '}', version_number.to_s)
-
-      # query parameters
-      query_params = {}
-      query_params[:'client_user_id'] = options.client_user_id if !options.client_user_id.nil?
-      query_params[:'from_date'] = options.from_date if !options.from_date.nil?
-      query_params[:'page_number'] = options.page_number if !options.page_number.nil?
-      query_params[:'status'] = options.status if !options.status.nil?
-      query_params[:'to_date'] = options.to_date if !options.to_date.nil?
-
-      # header parameters
-      header_params = {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-
-      # form parameters
-      form_params = {}
-
-      # http body (model)
-      post_body = nil
-      auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path,
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => 'ClickwrapAgreementsResponse')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AccountsApi#get_clickwrap_version_agreements_by_number\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Gets the Clickwrap version by clickwrapId and versionNumber for an account
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_number 
-    # @return [ClickwrapVersionResponse]
-    def get_clickwrap_version_by_number(account_id, clickwrap_id, version_number)
-      data, _status_code, _headers = get_clickwrap_version_by_number_with_http_info(account_id, clickwrap_id, version_number)
-      return data
-    end
-
-    # Gets the Clickwrap version by clickwrapId and versionNumber for an account
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_number 
-    # @return [Array<(ClickwrapVersionResponse, Fixnum, Hash)>] ClickwrapVersionResponse data, response status code and response headers
-    def get_clickwrap_version_by_number_with_http_info(account_id, clickwrap_id, version_number)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: AccountsApi.get_clickwrap_version_by_number ..."
-      end
-      # verify the required parameter 'account_id' is set
-      fail ArgumentError, "Missing the required parameter 'account_id' when calling AccountsApi.get_clickwrap_version_by_number" if account_id.nil?
-      # verify the required parameter 'clickwrap_id' is set
-      fail ArgumentError, "Missing the required parameter 'clickwrap_id' when calling AccountsApi.get_clickwrap_version_by_number" if clickwrap_id.nil?
-      # verify the required parameter 'version_number' is set
-      fail ArgumentError, "Missing the required parameter 'version_number' when calling AccountsApi.get_clickwrap_version_by_number" if version_number.nil?
-      # resource path
-      local_var_path = "/v1/accounts/{accountId}/clickwraps/{clickwrapId}/versions/{versionNumber}".sub('{format}','json').sub('{' + 'accountId' + '}', account_id.to_s).sub('{' + 'clickwrapId' + '}', clickwrap_id.to_s).sub('{' + 'versionNumber' + '}', version_number.to_s)
-
-      # query parameters
-      query_params = {}
-
-      # header parameters
-      header_params = {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-
-      # form parameters
-      form_params = {}
-
-      # http body (model)
-      post_body = nil
-      auth_names = []
-      data, status_code, headers = @api_client.call_api(:GET, local_var_path,
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => 'ClickwrapVersionResponse')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AccountsApi#get_clickwrap_version_by_number\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
     # Gets all the versions of a clickwrap for an account
     # 
     # @param account_id 
@@ -1121,10 +938,11 @@ module DocuSign_Click
 
       # query parameters
       query_params = {}
+      query_params[:'filter'] = options.filter if !options.filter.nil?
       query_params[:'from_date'] = options.from_date if !options.from_date.nil?
+      query_params[:'name'] = options.name if !options.name.nil?
       query_params[:'ownerUserId'] = options.owner_user_id if !options.owner_user_id.nil?
       query_params[:'page_number'] = options.page_number if !options.page_number.nil?
-      query_params[:'shared'] = options.shared if !options.shared.nil?
       query_params[:'status'] = options.status if !options.status.nil?
       query_params[:'to_date'] = options.to_date if !options.to_date.nil?
 
@@ -1307,65 +1125,6 @@ module DocuSign_Click
         :return_type => 'ClickwrapVersionSummaryResponse')
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: AccountsApi#update_clickwrap_version\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
-    # Updates the clickwrap version specified by versionNumber. Use versionId instead of versionNumber
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_number 
-    # @param clickwrap_request  (optional parameter)
-    # @return [ClickwrapVersionSummaryResponse]
-    def update_clickwrap_version_by_number(account_id, clickwrap_id, version_number, clickwrap_request)
-      data, _status_code, _headers = update_clickwrap_version_by_number_with_http_info(account_id, clickwrap_id, version_number,  clickwrap_request)
-      return data
-    end
-
-    # Updates the clickwrap version specified by versionNumber. Use versionId instead of versionNumber
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_number 
-    # @param clickwrap_request  (optional parameter)
-    # @return [Array<(ClickwrapVersionSummaryResponse, Fixnum, Hash)>] ClickwrapVersionSummaryResponse data, response status code and response headers
-    def update_clickwrap_version_by_number_with_http_info(account_id, clickwrap_id, version_number, clickwrap_request)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "Calling API: AccountsApi.update_clickwrap_version_by_number ..."
-      end
-      # verify the required parameter 'account_id' is set
-      fail ArgumentError, "Missing the required parameter 'account_id' when calling AccountsApi.update_clickwrap_version_by_number" if account_id.nil?
-      # verify the required parameter 'clickwrap_id' is set
-      fail ArgumentError, "Missing the required parameter 'clickwrap_id' when calling AccountsApi.update_clickwrap_version_by_number" if clickwrap_id.nil?
-      # verify the required parameter 'version_number' is set
-      fail ArgumentError, "Missing the required parameter 'version_number' when calling AccountsApi.update_clickwrap_version_by_number" if version_number.nil?
-      # resource path
-      local_var_path = "/v1/accounts/{accountId}/clickwraps/{clickwrapId}/versions/{versionNumber}".sub('{format}','json').sub('{' + 'accountId' + '}', account_id.to_s).sub('{' + 'clickwrapId' + '}', clickwrap_id.to_s).sub('{' + 'versionNumber' + '}', version_number.to_s)
-
-      # query parameters
-      query_params = {}
-
-      # header parameters
-      header_params = {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
-
-      # form parameters
-      form_params = {}
-
-      # http body (model)
-      post_body = @api_client.object_to_http_body(clickwrap_request)
-      auth_names = []
-      data, status_code, headers = @api_client.call_api(:PUT, local_var_path,
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => 'ClickwrapVersionSummaryResponse')
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: AccountsApi#update_clickwrap_version_by_number\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

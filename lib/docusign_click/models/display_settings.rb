@@ -50,9 +50,6 @@ module DocuSign_Click
     attr_accessor :has_decline_button
 
     # 
-    attr_accessor :host_origin
-
-    # 
     attr_accessor :must_read
 
     # 
@@ -82,7 +79,6 @@ module DocuSign_Click
         :'downloadable' => :'downloadable',
         :'format' => :'format',
         :'has_decline_button' => :'hasDeclineButton',
-        :'host_origin' => :'hostOrigin',
         :'must_read' => :'mustRead',
         :'must_view' => :'mustView',
         :'record_decline_responses' => :'recordDeclineResponses',
@@ -106,7 +102,6 @@ module DocuSign_Click
         :'downloadable' => :'BOOLEAN',
         :'format' => :'String',
         :'has_decline_button' => :'BOOLEAN',
-        :'host_origin' => :'String',
         :'must_read' => :'BOOLEAN',
         :'must_view' => :'BOOLEAN',
         :'record_decline_responses' => :'BOOLEAN',
@@ -173,10 +168,6 @@ module DocuSign_Click
         self.has_decline_button = attributes[:'hasDeclineButton']
       end
 
-      if attributes.has_key?(:'hostOrigin')
-        self.host_origin = attributes[:'hostOrigin']
-      end
-
       if attributes.has_key?(:'mustRead')
         self.must_read = attributes[:'mustRead']
       end
@@ -228,7 +219,6 @@ module DocuSign_Click
           downloadable == o.downloadable &&
           format == o.format &&
           has_decline_button == o.has_decline_button &&
-          host_origin == o.host_origin &&
           must_read == o.must_read &&
           must_view == o.must_view &&
           record_decline_responses == o.record_decline_responses &&
@@ -245,7 +235,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [action_button_alignment, allow_client_only, allowed_hosts, brand_id, consent_button_text, consent_text, decline_button_text, display_name, document_display, downloadable, format, has_decline_button, host_origin, must_read, must_view, record_decline_responses, require_accept, send_to_email].hash
+      [action_button_alignment, allow_client_only, allowed_hosts, brand_id, consent_button_text, consent_text, decline_button_text, display_name, document_display, downloadable, format, has_decline_button, must_read, must_view, record_decline_responses, require_accept, send_to_email].hash
     end
 
     # Builds the object from hash
