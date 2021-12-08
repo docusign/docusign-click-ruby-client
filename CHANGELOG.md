@@ -1,6 +1,12 @@
 # DocuSign Click Ruby Client Changelog
 See [DocuSign Support Center](https://support.docusign.com/en/releasenotes/) for Product Release Notes.
 
+## [1.1.0] - Click API v1-21.4.01 - 2021-12-08
+### Changed
+- Added support for version v1-21.4.01 of the DocuSign Click API.
+- Updated the SDK release version.
+
+
 ## [1.1.0.rc1] - Click API v1-21.4.00 - 2021-11-19
 ### Changed
 - Added support for version v1-21.4.00 of the DocuSign Click API.

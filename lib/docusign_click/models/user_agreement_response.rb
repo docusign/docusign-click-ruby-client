@@ -40,8 +40,6 @@ module DocuSign_Click
     # 
     attr_accessor :declined_on
 
-    attr_accessor :document_data
-
     # 
     attr_accessor :documents
 
@@ -74,7 +72,6 @@ module DocuSign_Click
         :'consumer_disclosure_html' => :'consumerDisclosureHtml',
         :'created_on' => :'createdOn',
         :'declined_on' => :'declinedOn',
-        :'document_data' => :'documentData',
         :'documents' => :'documents',
         :'metadata' => :'metadata',
         :'settings' => :'settings',
@@ -97,7 +94,6 @@ module DocuSign_Click
         :'consumer_disclosure_html' => :'String',
         :'created_on' => :'Object',
         :'declined_on' => :'Object',
-        :'document_data' => :'DocumentData',
         :'documents' => :'Array<Document>',
         :'metadata' => :'String',
         :'settings' => :'DisplaySettings',
@@ -150,10 +146,6 @@ module DocuSign_Click
 
       if attributes.has_key?(:'declinedOn')
         self.declined_on = attributes[:'declinedOn']
-      end
-
-      if attributes.has_key?(:'documentData')
-        self.document_data = attributes[:'documentData']
       end
 
       if attributes.has_key?(:'documents')
@@ -214,7 +206,6 @@ module DocuSign_Click
           consumer_disclosure_html == o.consumer_disclosure_html &&
           created_on == o.created_on &&
           declined_on == o.declined_on &&
-          document_data == o.document_data &&
           documents == o.documents &&
           metadata == o.metadata &&
           settings == o.settings &&
@@ -233,7 +224,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [account_id, agreed_on, agreement_id, agreement_url, clickwrap_id, client_user_id, consumer_disclosure_html, created_on, declined_on, document_data, documents, metadata, settings, status, version, version_id, version_number].hash
+      [account_id, agreed_on, agreement_id, agreement_url, clickwrap_id, client_user_id, consumer_disclosure_html, created_on, declined_on, documents, metadata, settings, status, version, version_id, version_number].hash
     end
 
     # Builds the object from hash
