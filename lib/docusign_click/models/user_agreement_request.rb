@@ -16,8 +16,6 @@ module DocuSign_Click
     # 
     attr_accessor :client_user_id
 
-    attr_accessor :document_data
-
     # 
     attr_accessor :metadata
 
@@ -25,7 +23,6 @@ module DocuSign_Click
     def self.attribute_map
       {
         :'client_user_id' => :'clientUserId',
-        :'document_data' => :'documentData',
         :'metadata' => :'metadata'
       }
     end
@@ -34,7 +31,6 @@ module DocuSign_Click
     def self.swagger_types
       {
         :'client_user_id' => :'String',
-        :'document_data' => :'DocumentData',
         :'metadata' => :'String'
       }
     end
@@ -49,10 +45,6 @@ module DocuSign_Click
 
       if attributes.has_key?(:'clientUserId')
         self.client_user_id = attributes[:'clientUserId']
-      end
-
-      if attributes.has_key?(:'documentData')
-        self.document_data = attributes[:'documentData']
       end
 
       if attributes.has_key?(:'metadata')
@@ -79,7 +71,6 @@ module DocuSign_Click
       return true if self.equal?(o)
       self.class == o.class &&
           client_user_id == o.client_user_id &&
-          document_data == o.document_data &&
           metadata == o.metadata
     end
 
@@ -92,7 +83,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [client_user_id, document_data, metadata].hash
+      [client_user_id, metadata].hash
     end
 
     # Builds the object from hash
