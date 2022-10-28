@@ -16,6 +16,9 @@ module DocuSign_Click
     # 
     attr_accessor :clickwrap_name
 
+    # 
+    attr_accessor :data_fields
+
     attr_accessor :display_settings
 
     # 
@@ -54,6 +57,7 @@ module DocuSign_Click
     def self.attribute_map
       {
         :'clickwrap_name' => :'clickwrapName',
+        :'data_fields' => :'dataFields',
         :'display_settings' => :'displaySettings',
         :'documents' => :'documents',
         :'fields_to_null' => :'fieldsToNull',
@@ -73,6 +77,7 @@ module DocuSign_Click
     def self.swagger_types
       {
         :'clickwrap_name' => :'String',
+        :'data_fields' => :'Array<DataField>',
         :'display_settings' => :'DisplaySettings',
         :'documents' => :'Array<Document>',
         :'fields_to_null' => :'String',
@@ -82,7 +87,7 @@ module DocuSign_Click
         :'require_reacceptance' => :'BOOLEAN',
         :'scheduled_date' => :'Object',
         :'scheduled_reacceptance' => :'ClickwrapScheduledReacceptance',
-        :'status' => :'Object',
+        :'status' => :'String',
         :'transfer_from_user_id' => :'String',
         :'transfer_to_user_id' => :'String'
       }
@@ -98,6 +103,12 @@ module DocuSign_Click
 
       if attributes.has_key?(:'clickwrapName')
         self.clickwrap_name = attributes[:'clickwrapName']
+      end
+
+      if attributes.has_key?(:'dataFields')
+        if (value = attributes[:'dataFields']).is_a?(Array)
+          self.data_fields = value
+        end
       end
 
       if attributes.has_key?(:'displaySettings')
@@ -170,6 +181,7 @@ module DocuSign_Click
       return true if self.equal?(o)
       self.class == o.class &&
           clickwrap_name == o.clickwrap_name &&
+          data_fields == o.data_fields &&
           display_settings == o.display_settings &&
           documents == o.documents &&
           fields_to_null == o.fields_to_null &&
@@ -193,7 +205,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [clickwrap_name, display_settings, documents, fields_to_null, is_major_version, is_shared, name, require_reacceptance, scheduled_date, scheduled_reacceptance, status, transfer_from_user_id, transfer_to_user_id].hash
+      [clickwrap_name, data_fields, display_settings, documents, fields_to_null, is_major_version, is_shared, name, require_reacceptance, scheduled_date, scheduled_reacceptance, status, transfer_from_user_id, transfer_to_user_id].hash
     end
 
     # Builds the object from hash

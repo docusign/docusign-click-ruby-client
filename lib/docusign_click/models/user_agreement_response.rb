@@ -32,6 +32,9 @@ module DocuSign_Click
     attr_accessor :client_user_id
 
     # 
+    attr_accessor :consumer_disclosure_enabled
+
+    # 
     attr_accessor :consumer_disclosure_html
 
     # 
@@ -39,6 +42,9 @@ module DocuSign_Click
 
     # 
     attr_accessor :declined_on
+
+    # 
+    attr_accessor :document_data
 
     # 
     attr_accessor :documents
@@ -50,6 +56,9 @@ module DocuSign_Click
 
     # 
     attr_accessor :status
+
+    # 
+    attr_accessor :style
 
     # 
     attr_accessor :version
@@ -69,13 +78,16 @@ module DocuSign_Click
         :'agreement_url' => :'agreementUrl',
         :'clickwrap_id' => :'clickwrapId',
         :'client_user_id' => :'clientUserId',
+        :'consumer_disclosure_enabled' => :'consumerDisclosureEnabled',
         :'consumer_disclosure_html' => :'consumerDisclosureHtml',
         :'created_on' => :'createdOn',
         :'declined_on' => :'declinedOn',
+        :'document_data' => :'documentData',
         :'documents' => :'documents',
         :'metadata' => :'metadata',
         :'settings' => :'settings',
         :'status' => :'status',
+        :'style' => :'style',
         :'version' => :'version',
         :'version_id' => :'versionId',
         :'version_number' => :'versionNumber'
@@ -91,13 +103,16 @@ module DocuSign_Click
         :'agreement_url' => :'String',
         :'clickwrap_id' => :'String',
         :'client_user_id' => :'String',
+        :'consumer_disclosure_enabled' => :'BOOLEAN',
         :'consumer_disclosure_html' => :'String',
         :'created_on' => :'Object',
         :'declined_on' => :'Object',
+        :'document_data' => :'Hash<String, String>',
         :'documents' => :'Array<Document>',
         :'metadata' => :'String',
         :'settings' => :'DisplaySettings',
         :'status' => :'String',
+        :'style' => :'Hash<String, String>',
         :'version' => :'String',
         :'version_id' => :'String',
         :'version_number' => :'Integer'
@@ -136,6 +151,10 @@ module DocuSign_Click
         self.client_user_id = attributes[:'clientUserId']
       end
 
+      if attributes.has_key?(:'consumerDisclosureEnabled')
+        self.consumer_disclosure_enabled = attributes[:'consumerDisclosureEnabled']
+      end
+
       if attributes.has_key?(:'consumerDisclosureHtml')
         self.consumer_disclosure_html = attributes[:'consumerDisclosureHtml']
       end
@@ -146,6 +165,12 @@ module DocuSign_Click
 
       if attributes.has_key?(:'declinedOn')
         self.declined_on = attributes[:'declinedOn']
+      end
+
+      if attributes.has_key?(:'documentData')
+        if (value = attributes[:'documentData']).is_a?(Hash)
+          self.document_data = value
+        end
       end
 
       if attributes.has_key?(:'documents')
@@ -164,6 +189,12 @@ module DocuSign_Click
 
       if attributes.has_key?(:'status')
         self.status = attributes[:'status']
+      end
+
+      if attributes.has_key?(:'style')
+        if (value = attributes[:'style']).is_a?(Hash)
+          self.style = value
+        end
       end
 
       if attributes.has_key?(:'version')
@@ -203,13 +234,16 @@ module DocuSign_Click
           agreement_url == o.agreement_url &&
           clickwrap_id == o.clickwrap_id &&
           client_user_id == o.client_user_id &&
+          consumer_disclosure_enabled == o.consumer_disclosure_enabled &&
           consumer_disclosure_html == o.consumer_disclosure_html &&
           created_on == o.created_on &&
           declined_on == o.declined_on &&
+          document_data == o.document_data &&
           documents == o.documents &&
           metadata == o.metadata &&
           settings == o.settings &&
           status == o.status &&
+          style == o.style &&
           version == o.version &&
           version_id == o.version_id &&
           version_number == o.version_number
@@ -224,7 +258,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [account_id, agreed_on, agreement_id, agreement_url, clickwrap_id, client_user_id, consumer_disclosure_html, created_on, declined_on, documents, metadata, settings, status, version, version_id, version_number].hash
+      [account_id, agreed_on, agreement_id, agreement_url, clickwrap_id, client_user_id, consumer_disclosure_enabled, consumer_disclosure_html, created_on, declined_on, document_data, documents, metadata, settings, status, style, version, version_id, version_number].hash
     end
 
     # Builds the object from hash

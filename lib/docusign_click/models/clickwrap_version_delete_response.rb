@@ -20,6 +20,9 @@ module DocuSign_Click
     attr_accessor :created_time
 
     # 
+    attr_accessor :data_fields
+
+    # 
     attr_accessor :deletion_message
 
     # 
@@ -56,6 +59,7 @@ module DocuSign_Click
       {
         :'clickwrap_version_id' => :'clickwrapVersionId',
         :'created_time' => :'createdTime',
+        :'data_fields' => :'dataFields',
         :'deletion_message' => :'deletionMessage',
         :'deletion_success' => :'deletionSuccess',
         :'last_modified' => :'lastModified',
@@ -75,6 +79,7 @@ module DocuSign_Click
       {
         :'clickwrap_version_id' => :'String',
         :'created_time' => :'Object',
+        :'data_fields' => :'Array<DataField>',
         :'deletion_message' => :'String',
         :'deletion_success' => :'BOOLEAN',
         :'last_modified' => :'Object',
@@ -103,6 +108,12 @@ module DocuSign_Click
 
       if attributes.has_key?(:'createdTime')
         self.created_time = attributes[:'createdTime']
+      end
+
+      if attributes.has_key?(:'dataFields')
+        if (value = attributes[:'dataFields']).is_a?(Array)
+          self.data_fields = value
+        end
       end
 
       if attributes.has_key?(:'deletionMessage')
@@ -170,6 +181,7 @@ module DocuSign_Click
       self.class == o.class &&
           clickwrap_version_id == o.clickwrap_version_id &&
           created_time == o.created_time &&
+          data_fields == o.data_fields &&
           deletion_message == o.deletion_message &&
           deletion_success == o.deletion_success &&
           last_modified == o.last_modified &&
@@ -192,7 +204,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [clickwrap_version_id, created_time, deletion_message, deletion_success, last_modified, last_modified_by, owner_user_id, require_reacceptance, scheduled_date, scheduled_reacceptance, status, version_id, version_number].hash
+      [clickwrap_version_id, created_time, data_fields, deletion_message, deletion_success, last_modified, last_modified_by, owner_user_id, require_reacceptance, scheduled_date, scheduled_reacceptance, status, version_id, version_number].hash
     end
 
     # Builds the object from hash
