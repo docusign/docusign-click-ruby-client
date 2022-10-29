@@ -17,6 +17,9 @@ module DocuSign_Click
     attr_accessor :document_base64
 
     # 
+    attr_accessor :document_display
+
+    # 
     attr_accessor :document_html
 
     # 
@@ -26,15 +29,24 @@ module DocuSign_Click
     attr_accessor :file_extension
 
     # 
+    attr_accessor :must_read
+
+    # 
+    attr_accessor :must_view
+
+    # 
     attr_accessor :order
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'document_base64' => :'documentBase64',
+        :'document_display' => :'documentDisplay',
         :'document_html' => :'documentHtml',
         :'document_name' => :'documentName',
         :'file_extension' => :'fileExtension',
+        :'must_read' => :'mustRead',
+        :'must_view' => :'mustView',
         :'order' => :'order'
       }
     end
@@ -43,9 +55,12 @@ module DocuSign_Click
     def self.swagger_types
       {
         :'document_base64' => :'String',
+        :'document_display' => :'String',
         :'document_html' => :'String',
         :'document_name' => :'String',
         :'file_extension' => :'String',
+        :'must_read' => :'BOOLEAN',
+        :'must_view' => :'BOOLEAN',
         :'order' => :'Integer'
       }
     end
@@ -62,6 +77,10 @@ module DocuSign_Click
         self.document_base64 = attributes[:'documentBase64']
       end
 
+      if attributes.has_key?(:'documentDisplay')
+        self.document_display = attributes[:'documentDisplay']
+      end
+
       if attributes.has_key?(:'documentHtml')
         self.document_html = attributes[:'documentHtml']
       end
@@ -72,6 +91,14 @@ module DocuSign_Click
 
       if attributes.has_key?(:'fileExtension')
         self.file_extension = attributes[:'fileExtension']
+      end
+
+      if attributes.has_key?(:'mustRead')
+        self.must_read = attributes[:'mustRead']
+      end
+
+      if attributes.has_key?(:'mustView')
+        self.must_view = attributes[:'mustView']
       end
 
       if attributes.has_key?(:'order')
@@ -98,9 +125,12 @@ module DocuSign_Click
       return true if self.equal?(o)
       self.class == o.class &&
           document_base64 == o.document_base64 &&
+          document_display == o.document_display &&
           document_html == o.document_html &&
           document_name == o.document_name &&
           file_extension == o.file_extension &&
+          must_read == o.must_read &&
+          must_view == o.must_view &&
           order == o.order
     end
 
@@ -113,7 +143,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [document_base64, document_html, document_name, file_extension, order].hash
+      [document_base64, document_display, document_html, document_name, file_extension, must_read, must_view, order].hash
     end
 
     # Builds the object from hash

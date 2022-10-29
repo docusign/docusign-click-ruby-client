@@ -64,6 +64,9 @@ module DocuSign_Click
     # 
     attr_accessor :send_to_email
 
+    # 
+    attr_accessor :statement_alignment
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -83,7 +86,8 @@ module DocuSign_Click
         :'must_view' => :'mustView',
         :'record_decline_responses' => :'recordDeclineResponses',
         :'require_accept' => :'requireAccept',
-        :'send_to_email' => :'sendToEmail'
+        :'send_to_email' => :'sendToEmail',
+        :'statement_alignment' => :'statementAlignment'
       }
     end
 
@@ -106,7 +110,8 @@ module DocuSign_Click
         :'must_view' => :'BOOLEAN',
         :'record_decline_responses' => :'BOOLEAN',
         :'require_accept' => :'BOOLEAN',
-        :'send_to_email' => :'BOOLEAN'
+        :'send_to_email' => :'BOOLEAN',
+        :'statement_alignment' => :'String'
       }
     end
 
@@ -187,6 +192,10 @@ module DocuSign_Click
       if attributes.has_key?(:'sendToEmail')
         self.send_to_email = attributes[:'sendToEmail']
       end
+
+      if attributes.has_key?(:'statementAlignment')
+        self.statement_alignment = attributes[:'statementAlignment']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -223,7 +232,8 @@ module DocuSign_Click
           must_view == o.must_view &&
           record_decline_responses == o.record_decline_responses &&
           require_accept == o.require_accept &&
-          send_to_email == o.send_to_email
+          send_to_email == o.send_to_email &&
+          statement_alignment == o.statement_alignment
     end
 
     # @see the `==` method
@@ -235,7 +245,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [action_button_alignment, allow_client_only, allowed_hosts, brand_id, consent_button_text, consent_text, decline_button_text, display_name, document_display, downloadable, format, has_decline_button, must_read, must_view, record_decline_responses, require_accept, send_to_email].hash
+      [action_button_alignment, allow_client_only, allowed_hosts, brand_id, consent_button_text, consent_text, decline_button_text, display_name, document_display, downloadable, format, has_decline_button, must_read, must_view, record_decline_responses, require_accept, send_to_email, statement_alignment].hash
     end
 
     # Builds the object from hash
