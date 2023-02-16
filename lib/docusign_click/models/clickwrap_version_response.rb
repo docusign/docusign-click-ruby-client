@@ -1,7 +1,7 @@
 =begin
 #DocuSign Click API
 
-#DocuSign Click lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable clickwrap solution in your DocuSign integrations.
+#Elastic signing (also known as DocuSign Click)  lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable elastic template solution in your DocuSign integrations.
 
 OpenAPI spec version: v1
 Contact: devcenter@docusign.com
@@ -13,53 +13,55 @@ require 'date'
 
 module DocuSign_Click
   class ClickwrapVersionResponse
-    # 
+    # The external account number (int) or account ID GUID.
     attr_accessor :account_id
 
-    # 
+    # The ID of the clickwrap.
     attr_accessor :clickwrap_id
 
-    # 
+    # The name of the clickwrap.
     attr_accessor :clickwrap_name
 
-    # 
+    # The unique version ID, a GUID, of this clickwrap version.
     attr_accessor :clickwrap_version_id
 
-    # 
+    # The time that the clickwrap was created.
     attr_accessor :created_time
 
-    # 
+    # The list of all the data fields available for the clickwrap (custom fields and standard fields).
     attr_accessor :data_fields
 
+    # Display settings for a clickwrap.
     attr_accessor :display_settings
 
-    # 
+    # An array of documents.
     attr_accessor :documents
 
-    # 
+    # The time that the clickwrap was last modified.
     attr_accessor :last_modified
 
-    # 
+    # The user ID of the last user who modified this clickwrap.
     attr_accessor :last_modified_by
 
-    # 
+    # The user ID of the owner of this clickwrap.
     attr_accessor :owner_user_id
 
-    # 
+    # When **true,** requires signers who have previously agreed to this clickwrap to sign again. The version number is incremented.
     attr_accessor :require_reacceptance
 
-    # 
+    # The time and date when this clickwrap is activated.
     attr_accessor :scheduled_date
 
+    # Specifies the interval between reacceptances in days, weeks, months, or years.
     attr_accessor :scheduled_reacceptance
 
-    # 
+    # Clickwrap status. Possible values:  - `active` - `inactive` - `deleted`
     attr_accessor :status
 
-    # 
+    # The ID of the version.
     attr_accessor :version_id
 
-    # 
+    # Version of the clickwrap.
     attr_accessor :version_number
 
     # Attribute mapping from ruby-style variable name to JSON key.

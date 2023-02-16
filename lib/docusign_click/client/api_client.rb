@@ -1,7 +1,7 @@
 =begin
 #DocuSign Click API
 
-#DocuSign Click lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable clickwrap solution in your DocuSign integrations.
+#Elastic signing (also known as DocuSign Click)  lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable elastic template solution in your DocuSign integrations.
 
 OpenAPI spec version: v1
 Contact: devcenter@docusign.com
@@ -35,7 +35,7 @@ module DocuSign_Click
     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
     def initialize(config = Configuration.default)
       @config = config
-      @user_agent = "Swagger-Codegen/1.2.2/ruby"
+      @user_agent = "Swagger-Codegen/1.3.0/ruby"
       @default_headers = {
         'Content-Type' => "application/json",
         'User-Agent' => @user_agent

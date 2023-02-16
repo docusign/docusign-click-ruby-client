@@ -1,7 +1,7 @@
 =begin
 #DocuSign Click API
 
-#DocuSign Click lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable clickwrap solution in your DocuSign integrations.
+#Elastic signing (also known as DocuSign Click)  lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable elastic template solution in your DocuSign integrations.
 
 OpenAPI spec version: v1
 Contact: devcenter@docusign.com
@@ -14,7 +14,7 @@ require "uri"
 module DocuSign_Click
 
   class DeleteClickwrapOptions
-    # 
+    # A comma-separated list of versions to delete.
     attr_accessor :versions
 
     def self.default
@@ -23,7 +23,7 @@ module DocuSign_Click
   end
 
   class DeleteClickwrapVersionsOptions
-    # 
+    # A comma-separated list of clickwrap version IDs to delete.
     attr_accessor :clickwrap_version_ids
 
     def self.default
@@ -32,7 +32,7 @@ module DocuSign_Click
   end
 
   class DeleteClickwrapsOptions
-    # 
+    # A comma-separated list of clickwrap IDs to delete.
     attr_accessor :clickwrap_ids
 
     def self.default
@@ -41,7 +41,7 @@ module DocuSign_Click
   end
 
   class GetAgreementPdfOptions
-    # 
+    # When **true,** the Certificate of Completion will be appended to the PDF. The default value is **false.**
     attr_accessor :include_coc
 
     def self.default
@@ -50,19 +50,19 @@ module DocuSign_Click
   end
 
   class GetClickwrapAgreementsOptions
-    # 
+    # The client user ID to filter to a single user's agreements.
     attr_accessor :client_user_id
 
-    # 
+    # The earliest date to return agreements from.
     attr_accessor :from_date
 
-    # 
+    # The results for this endpoint are paginated. Use this parameter to indicate which page to return. The `minimumPagesRemaining` value in the response indicates whether to continue querying for additional pages.  For example, if the page size is 40: * If this property is set to 0 (the default), the endpoint returns results 1-40. * If this property is set to 1, the endpoint returns results 41-80.  The default value is 0. 
     attr_accessor :page_number
 
-    # 
+    # User agreement status. One of:  - `created` - `agreed` - `declined`
     attr_accessor :status
 
-    # 
+    # The latest date to return agreements from.
     attr_accessor :to_date
 
     def self.default
@@ -71,19 +71,19 @@ module DocuSign_Click
   end
 
   class GetClickwrapVersionAgreementsOptions
-    # 
+    # The client user ID to filter to a single user's agreements.
     attr_accessor :client_user_id
 
-    # 
+    # The earliest date to return agreements from.
     attr_accessor :from_date
 
-    # 
+    # The results for this endpoint are paginated. Use this parameter to indicate which page to return. The `minimumPagesRemaining` value in the response indicates whether to continue querying for additional pages.  For example, if the page size is 40: * If this property is set to 0 (the default), the endpoint returns results 1-40. * If this property is set to 1, the endpoint returns results 41-80.  The default value is 0. 
     attr_accessor :page_number
 
-    # 
+    # User agreement status. One of:  - `created` - `agreed` - `declined`
     attr_accessor :status
 
-    # 
+    # The latest date to return agreements from.
     attr_accessor :to_date
 
     def self.default
@@ -92,25 +92,25 @@ module DocuSign_Click
   end
 
   class GetClickwrapsOptions
-    # 
+    # Names of columns by which to filter and values to match on.
     attr_accessor :filter
 
-    # 
+    # The earliest date to return clickwraps from.
     attr_accessor :from_date
 
-    # 
+    # The name of the clickwraps to return.
     attr_accessor :name
 
-    # 
+    # The user ID of the owner.
     attr_accessor :owner_user_id
 
-    # 
+    # The results for this endpoint are paginated. Use this parameter to indicate which page to return. The `minimumPagesRemaining` value in the response indicates whether to continue querying for additional pages.  For example, if the page size is 40: * If this property is set to 0 (the default), the endpoint returns results 1-40. * If this property is set to 1, the endpoint returns results 41-80.  The default value is 0. 
     attr_accessor :page_number
 
-    # 
+    # The status of the clickwraps to filter by. One of:  - `active` - `inactive`  
     attr_accessor :status
 
-    # 
+    # The latest date to return clickwraps from.
     attr_accessor :to_date
 
     def self.default
@@ -126,20 +126,74 @@ module DocuSign_Click
       @api_client = api_client
     end
 
-    # Creates a Clickwrap for the specified accountId
-    # 
-    # @param account_id 
-    # @param clickwrap_request  (optional parameter)
+    # Starts an export of clickwrap agreements for a specified date range.
+    # Starts an asynchronus process to export clickwrap agreements for a specified date range. An email will be sent to the creator after it has been processed.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param bulk_clickwrap_request Data used to start a bulk agreements export. (optional parameter)
+    # @return [nil]
+    def create_bulk_clickwrap_agreements(account_id, clickwrap_id, bulk_clickwrap_request)
+      create_bulk_clickwrap_agreements_with_http_info(account_id, clickwrap_id,  bulk_clickwrap_request)
+      return nil
+    end
+
+    # Starts an export of clickwrap agreements for a specified date range.
+    # Starts an asynchronus process to export clickwrap agreements for a specified date range. An email will be sent to the creator after it has been processed.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param bulk_clickwrap_request Data used to start a bulk agreements export. (optional parameter)
+    # @return [Array<(nil, Fixnum, Hash)>] nil, response status code and response headers
+    def create_bulk_clickwrap_agreements_with_http_info(account_id, clickwrap_id, bulk_clickwrap_request)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "Calling API: AccountsApi.create_bulk_clickwrap_agreements ..."
+      end
+      # verify the required parameter 'account_id' is set
+      fail ArgumentError, "Missing the required parameter 'account_id' when calling AccountsApi.create_bulk_clickwrap_agreements" if account_id.nil?
+      # verify the required parameter 'clickwrap_id' is set
+      fail ArgumentError, "Missing the required parameter 'clickwrap_id' when calling AccountsApi.create_bulk_clickwrap_agreements" if clickwrap_id.nil?
+      # resource path
+      local_var_path = "/v1/accounts/{accountId}/clickwraps/{clickwrapId}/bulk_agreements".sub('{format}','json').sub('{' + 'accountId' + '}', account_id.to_s).sub('{' + 'clickwrapId' + '}', clickwrap_id.to_s)
+
+      # query parameters
+      query_params = {}
+
+      # header parameters
+      header_params = {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = {}
+
+      # http body (model)
+      post_body = @api_client.object_to_http_body(bulk_clickwrap_request)
+      auth_names = []
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path,
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: AccountsApi#create_bulk_clickwrap_agreements\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Creates a clickwrap for an account.
+    # Creates a clickwrap for an account.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_request Request body for working with clickwrap. (optional parameter)
     # @return [ClickwrapVersionSummaryResponse]
     def create_clickwrap(account_id, clickwrap_request)
       data, _status_code, _headers = create_clickwrap_with_http_info(account_id,  clickwrap_request)
       return data
     end
 
-    # Creates a Clickwrap for the specified accountId
-    # 
-    # @param account_id 
-    # @param clickwrap_request  (optional parameter)
+    # Creates a clickwrap for an account.
+    # Creates a clickwrap for an account.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_request Request body for working with clickwrap. (optional parameter)
     # @return [Array<(ClickwrapVersionSummaryResponse, Fixnum, Hash)>] ClickwrapVersionSummaryResponse data, response status code and response headers
     def create_clickwrap_with_http_info(account_id, clickwrap_request)
       if @api_client.config.debugging
@@ -177,22 +231,22 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Creates the clickwrap version
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param clickwrap_request  (optional parameter)
+    # Creates a new clickwrap version.
+    # Creates a new version of an existing clickwrap. In a new version, you can replace the uploaded documents, change the display settings, and change the name of the clickwrap. The version number is automatically incremented based on the last version of the clickwrap.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param clickwrap_request Request body for working with clickwrap. (optional parameter)
     # @return [ClickwrapVersionSummaryResponse]
     def create_clickwrap_version(account_id, clickwrap_id, clickwrap_request)
       data, _status_code, _headers = create_clickwrap_version_with_http_info(account_id, clickwrap_id,  clickwrap_request)
       return data
     end
 
-    # Creates the clickwrap version
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param clickwrap_request  (optional parameter)
+    # Creates a new clickwrap version.
+    # Creates a new version of an existing clickwrap. In a new version, you can replace the uploaded documents, change the display settings, and change the name of the clickwrap. The version number is automatically incremented based on the last version of the clickwrap.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param clickwrap_request Request body for working with clickwrap. (optional parameter)
     # @return [Array<(ClickwrapVersionSummaryResponse, Fixnum, Hash)>] ClickwrapVersionSummaryResponse data, response status code and response headers
     def create_clickwrap_version_with_http_info(account_id, clickwrap_id, clickwrap_request)
       if @api_client.config.debugging
@@ -232,22 +286,22 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Checks if a user has agreed to a clickwrap and returns a response with the agreement url. Returns HttpStatusCode.OK if user has no pending agreement.
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param user_agreement_request  (optional parameter)
+    # Creates a unique URL for the agreement that you can embed in your application.
+    # Creates a unique URL for the agreement that you can embed in your application.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage` and `click.send`.  The request must include at least the `clientUserId`. This is a value that you generate to identify the unique recipient of the agreement.  If you are using a [dynamic content][] document, you can supply the values in the documentData property of the request, like this:  ```json {   \"clientUserId\": \"cl-bc7f-48a9\",   \"documentData\": {     \"fullName\": \"T. J. Fanning\",     \"email\": \"tj@example.com\",     \"company\": \"Fanning Indusdtries\",     \"title\": \"Cat wrangler\",     \"date\": \"2022-10-13T05:17:14-07:00\"   } } ```  A response will look like this. The `agreementUrl` is unique to the user identified by the `clientUserId`. Your user can open the URL to approve the agreement. The `documentData` property appears only if you provided it in the request.  ```json {   \"accountId\": \"624e3e00-xxxx-xxxx-xxxx-43918c520dab\",   \"clickwrapId\": \"0e64e4a7-xxxx-xxxx-xxxx-ce5a93b162af\",   \"clientUserId\": \"tcl-bc7f-48a9j\",   \"agreementId\": \"1f346c7d-xxxx-xxxx-xxxx-a5c968666785\",   \"documents\": [ . . .],   \"consumerDisclosureEnabled\": true,   \"agreementUrl\": \"https://demo.docusign.net/clickapi/v1/redeem?agreementToken=AcTZT8g ... cxEqrUsA1lQ8DPPy05dE0\",   \"createdOn\": \"2022-10-20T16:27:25.1287685Z\",   \"status\": \"created\",   \"versionId\": \"5957716d-xxxx-xxxx-xxxx-e1594f00ff12\",   \"versionNumber\": 1,   \"settings\": {     \"displayName\": \"Agree with me\",     \"hasDeclineButton\": true,     .  . .     \"statementAlignment\": \"bottom\"   },   \"documentData\": {     \"fullName\": \"T. J. Fanning\",     \"email\": \"tj@example.com\",     \"company\": \"Fanning Indusdtries\",     \"title\": \"Cat wrangler\",     \"date\": \"2022-10-13T05:17:14-07:00\"   } } ```  This method returns the following result codes and response bodies depending on whether the user has agreed.   | Agreed | Response code | Response body          | | :----- | :------------ | :--------------------- | | No     | 201           | Full response as above | | Yes    | 200           | No response (empty)    |   ### Related topics  - [Add dynamic content to your clickwrap][dynamic content] - [How to embed a clickwrap][embed-howto]   [dynamic content]:  /docs/click-api/click101/customize-clickwrap-fields/#add-dynamic-content-to-your-clickwrap [embedding]:        /docs/click-api/click101/customize-clickwrap-fields/#embed-clickwraps-that-contain-dynamic-content [embed-howto]:      /docs/click-api/how-to/embed-clickwraps/ 
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param user_agreement_request Data used to create the agreement. (optional parameter)
     # @return [UserAgreementResponse]
     def create_has_agreed(account_id, clickwrap_id, user_agreement_request)
       data, _status_code, _headers = create_has_agreed_with_http_info(account_id, clickwrap_id,  user_agreement_request)
       return data
     end
 
-    # Checks if a user has agreed to a clickwrap and returns a response with the agreement url. Returns HttpStatusCode.OK if user has no pending agreement.
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param user_agreement_request  (optional parameter)
+    # Creates a unique URL for the agreement that you can embed in your application.
+    # Creates a unique URL for the agreement that you can embed in your application.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60; and &#x60;click.send&#x60;.  The request must include at least the &#x60;clientUserId&#x60;. This is a value that you generate to identify the unique recipient of the agreement.  If you are using a [dynamic content][] document, you can supply the values in the documentData property of the request, like this:  &#x60;&#x60;&#x60;json {   \&quot;clientUserId\&quot;: \&quot;cl-bc7f-48a9\&quot;,   \&quot;documentData\&quot;: {     \&quot;fullName\&quot;: \&quot;T. J. Fanning\&quot;,     \&quot;email\&quot;: \&quot;tj@example.com\&quot;,     \&quot;company\&quot;: \&quot;Fanning Indusdtries\&quot;,     \&quot;title\&quot;: \&quot;Cat wrangler\&quot;,     \&quot;date\&quot;: \&quot;2022-10-13T05:17:14-07:00\&quot;   } } &#x60;&#x60;&#x60;  A response will look like this. The &#x60;agreementUrl&#x60; is unique to the user identified by the &#x60;clientUserId&#x60;. Your user can open the URL to approve the agreement. The &#x60;documentData&#x60; property appears only if you provided it in the request.  &#x60;&#x60;&#x60;json {   \&quot;accountId\&quot;: \&quot;624e3e00-xxxx-xxxx-xxxx-43918c520dab\&quot;,   \&quot;clickwrapId\&quot;: \&quot;0e64e4a7-xxxx-xxxx-xxxx-ce5a93b162af\&quot;,   \&quot;clientUserId\&quot;: \&quot;tcl-bc7f-48a9j\&quot;,   \&quot;agreementId\&quot;: \&quot;1f346c7d-xxxx-xxxx-xxxx-a5c968666785\&quot;,   \&quot;documents\&quot;: [ . . .],   \&quot;consumerDisclosureEnabled\&quot;: true,   \&quot;agreementUrl\&quot;: \&quot;https://demo.docusign.net/clickapi/v1/redeem?agreementToken&#x3D;AcTZT8g ... cxEqrUsA1lQ8DPPy05dE0\&quot;,   \&quot;createdOn\&quot;: \&quot;2022-10-20T16:27:25.1287685Z\&quot;,   \&quot;status\&quot;: \&quot;created\&quot;,   \&quot;versionId\&quot;: \&quot;5957716d-xxxx-xxxx-xxxx-e1594f00ff12\&quot;,   \&quot;versionNumber\&quot;: 1,   \&quot;settings\&quot;: {     \&quot;displayName\&quot;: \&quot;Agree with me\&quot;,     \&quot;hasDeclineButton\&quot;: true,     .  . .     \&quot;statementAlignment\&quot;: \&quot;bottom\&quot;   },   \&quot;documentData\&quot;: {     \&quot;fullName\&quot;: \&quot;T. J. Fanning\&quot;,     \&quot;email\&quot;: \&quot;tj@example.com\&quot;,     \&quot;company\&quot;: \&quot;Fanning Indusdtries\&quot;,     \&quot;title\&quot;: \&quot;Cat wrangler\&quot;,     \&quot;date\&quot;: \&quot;2022-10-13T05:17:14-07:00\&quot;   } } &#x60;&#x60;&#x60;  This method returns the following result codes and response bodies depending on whether the user has agreed.   | Agreed | Response code | Response body          | | :----- | :------------ | :--------------------- | | No     | 201           | Full response as above | | Yes    | 200           | No response (empty)    |   ### Related topics  - [Add dynamic content to your clickwrap][dynamic content] - [How to embed a clickwrap][embed-howto]   [dynamic content]:  /docs/click-api/click101/customize-clickwrap-fields/#add-dynamic-content-to-your-clickwrap [embedding]:        /docs/click-api/click101/customize-clickwrap-fields/#embed-clickwraps-that-contain-dynamic-content [embed-howto]:      /docs/click-api/how-to/embed-clickwraps/ 
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param user_agreement_request Data used to create the agreement. (optional parameter)
     # @return [Array<(UserAgreementResponse, Fixnum, Hash)>] UserAgreementResponse data, response status code and response headers
     def create_has_agreed_with_http_info(account_id, clickwrap_id, user_agreement_request)
       if @api_client.config.debugging
@@ -287,10 +341,10 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Deletes the clickwrap and all its version specified by clickwrapId. Active clickwrap will not get deleted
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Deletes a clickwrap and all of its versions.
+    # Deletes the clickwrap specified by `clickwrapId` and all of its versions. Active clickwraps are not deleted  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @param DocuSign_Click::DeleteClickwrapOptions Options for modifying the behavior of the function.
     # @return [ClickwrapVersionsDeleteResponse]
     def delete_clickwrap(account_id, clickwrap_id, options = DocuSign_Click::DeleteClickwrapOptions.default)
@@ -298,10 +352,10 @@ module DocuSign_Click
       return data
     end
 
-    # Deletes the clickwrap and all its version specified by clickwrapId. Active clickwrap will not get deleted
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Deletes a clickwrap and all of its versions.
+    # Deletes the clickwrap specified by &#x60;clickwrapId&#x60; and all of its versions. Active clickwraps are not deleted  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @param DocuSign_Click::DeleteClickwrapOptions Options for modifying the behavior of the function.
     # @return [Array<(ClickwrapVersionsDeleteResponse, Fixnum, Hash)>] ClickwrapVersionsDeleteResponse data, response status code and response headers
     def delete_clickwrap_with_http_info(account_id, clickwrap_id, options = DocuSign_Click::DeleteClickwrapOptions.default)
@@ -343,22 +397,22 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Delete a Clickwrap version specified by versionId
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_id 
+    # Deletes a clickwrap version by version ID.
+    # Deletes the clickwrap version specified by `versionId` of the clickwrap specified by `clickwrapId`.  **Note:** This endpoint requires the version ID (a GUID), not the version number (an integer).  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param version_id The ID of the clickwrap version.
     # @return [ClickwrapVersionDeleteResponse]
     def delete_clickwrap_version(account_id, clickwrap_id, version_id)
       data, _status_code, _headers = delete_clickwrap_version_with_http_info(account_id, clickwrap_id, version_id)
       return data
     end
 
-    # Delete a Clickwrap version specified by versionId
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_id 
+    # Deletes a clickwrap version by version ID.
+    # Deletes the clickwrap version specified by &#x60;versionId&#x60; of the clickwrap specified by &#x60;clickwrapId&#x60;.  **Note:** This endpoint requires the version ID (a GUID), not the version number (an integer).  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param version_id The ID of the clickwrap version.
     # @return [Array<(ClickwrapVersionDeleteResponse, Fixnum, Hash)>] ClickwrapVersionDeleteResponse data, response status code and response headers
     def delete_clickwrap_version_with_http_info(account_id, clickwrap_id, version_id)
       if @api_client.config.debugging
@@ -400,10 +454,10 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Deletes the versions specified by query parameter clickwrapVersionIds for a clickwrap, or all versions if no query parameter is specified. It will not delete if a version is active.
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Deletes the versions of a clickwrap.
+    # Deletes all versions of a clickwrap, or only the ones specified in the `clickwrapVersionIds` query parameter.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @param DocuSign_Click::DeleteClickwrapVersionsOptions Options for modifying the behavior of the function.
     # @return [ClickwrapVersionsDeleteResponse]
     def delete_clickwrap_versions(account_id, clickwrap_id, options = DocuSign_Click::DeleteClickwrapVersionsOptions.default)
@@ -411,10 +465,10 @@ module DocuSign_Click
       return data
     end
 
-    # Deletes the versions specified by query parameter clickwrapVersionIds for a clickwrap, or all versions if no query parameter is specified. It will not delete if a version is active.
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Deletes the versions of a clickwrap.
+    # Deletes all versions of a clickwrap, or only the ones specified in the &#x60;clickwrapVersionIds&#x60; query parameter.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @param DocuSign_Click::DeleteClickwrapVersionsOptions Options for modifying the behavior of the function.
     # @return [Array<(ClickwrapVersionsDeleteResponse, Fixnum, Hash)>] ClickwrapVersionsDeleteResponse data, response status code and response headers
     def delete_clickwrap_versions_with_http_info(account_id, clickwrap_id, options = DocuSign_Click::DeleteClickwrapVersionsOptions.default)
@@ -456,9 +510,9 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Deletes all the clickwraps for an account or the ones passed in query parameter clickwrapIds. It will not delete active clickwraps.
-    # 
-    # @param account_id 
+    # Deletes clickwraps for an account.
+    # Deletes all clickwraps for an account or only the ones specified in the `clickwrapIds` query parameter.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
     # @param DocuSign_Click::DeleteClickwrapsOptions Options for modifying the behavior of the function.
     # @return [ClickwrapsDeleteResponse]
     def delete_clickwraps(account_id, options = DocuSign_Click::DeleteClickwrapsOptions.default)
@@ -466,9 +520,9 @@ module DocuSign_Click
       return data
     end
 
-    # Deletes all the clickwraps for an account or the ones passed in query parameter clickwrapIds. It will not delete active clickwraps.
-    # 
-    # @param account_id 
+    # Deletes clickwraps for an account.
+    # Deletes all clickwraps for an account or only the ones specified in the &#x60;clickwrapIds&#x60; query parameter.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
     # @param DocuSign_Click::DeleteClickwrapsOptions Options for modifying the behavior of the function.
     # @return [Array<(ClickwrapsDeleteResponse, Fixnum, Hash)>] ClickwrapsDeleteResponse data, response status code and response headers
     def delete_clickwraps_with_http_info(account_id, options = DocuSign_Click::DeleteClickwrapsOptions.default)
@@ -508,22 +562,22 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets the agreement by a provided agreement ID
-    # 
-    # @param account_id 
-    # @param agreement_id 
-    # @param clickwrap_id 
+    # Gets a specific agreement for a specified clickwrap.
+    # Gets the agreement specified by `agreementId`.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage` or `click.send`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param agreement_id The agreement ID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @return [UserAgreementResponse]
     def get_agreement(account_id, agreement_id, clickwrap_id)
       data, _status_code, _headers = get_agreement_with_http_info(account_id, agreement_id, clickwrap_id)
       return data
     end
 
-    # Gets the agreement by a provided agreement ID
-    # 
-    # @param account_id 
-    # @param agreement_id 
-    # @param clickwrap_id 
+    # Gets a specific agreement for a specified clickwrap.
+    # Gets the agreement specified by &#x60;agreementId&#x60;.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60; or &#x60;click.send&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param agreement_id The agreement ID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @return [Array<(UserAgreementResponse, Fixnum, Hash)>] UserAgreementResponse data, response status code and response headers
     def get_agreement_with_http_info(account_id, agreement_id, clickwrap_id)
       if @api_client.config.debugging
@@ -566,11 +620,11 @@ module DocuSign_Click
     end
 
     # Downloads a document at an order within the agreement.
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param order_or_disclosure 
-    # @param version_id 
+    # Downloads a specific document from the agreement presented to the user.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.sign`
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param order_or_disclosure The order of the document or consumer_disclosure.
+    # @param version_id The ID of the clickwrap version.
     # @return [Document]
     def get_agreement_document(account_id, clickwrap_id, order_or_disclosure, version_id)
       data, _status_code, _headers = get_agreement_document_with_http_info(account_id, clickwrap_id, order_or_disclosure, version_id)
@@ -578,11 +632,11 @@ module DocuSign_Click
     end
 
     # Downloads a document at an order within the agreement.
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param order_or_disclosure 
-    # @param version_id 
+    # Downloads a specific document from the agreement presented to the user.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.sign&#x60;
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param order_or_disclosure The order of the document or consumer_disclosure.
+    # @param version_id The ID of the clickwrap version.
     # @return [Array<(Document, Fixnum, Hash)>] Document data, response status code and response headers
     def get_agreement_document_with_http_info(account_id, clickwrap_id, order_or_disclosure, version_id)
       if @api_client.config.debugging
@@ -626,11 +680,11 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Downloads the agreement PDF and optionally certificate of completion.
-    # 
-    # @param account_id 
-    # @param agreement_id 
-    # @param clickwrap_id 
+    # Gets the completed user agreement PDF.
+    # Gets the PDF of  `agreementId` for the clickwrap specified by `clickwrapId`.  The response to this method is the bytes of the PDF file. The response includes the HTTP header `application/pdf`.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage` or `click.send`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param agreement_id The agreement ID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @param DocuSign_Click::GetAgreementPdfOptions Options for modifying the behavior of the function.
     # @return [File]
     def get_agreement_pdf(account_id, agreement_id, clickwrap_id, options = DocuSign_Click::GetAgreementPdfOptions.default)
@@ -638,11 +692,11 @@ module DocuSign_Click
       return data
     end
 
-    # Downloads the agreement PDF and optionally certificate of completion.
-    # 
-    # @param account_id 
-    # @param agreement_id 
-    # @param clickwrap_id 
+    # Gets the completed user agreement PDF.
+    # Gets the PDF of  &#x60;agreementId&#x60; for the clickwrap specified by &#x60;clickwrapId&#x60;.  The response to this method is the bytes of the PDF file. The response includes the HTTP header &#x60;application/pdf&#x60;.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60; or &#x60;click.send&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param agreement_id The agreement ID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @param DocuSign_Click::GetAgreementPdfOptions Options for modifying the behavior of the function.
     # @return [Array<(File, Fixnum, Hash)>] File data, response status code and response headers
     def get_agreement_pdf_with_http_info(account_id, agreement_id, clickwrap_id, options = DocuSign_Click::GetAgreementPdfOptions.default)
@@ -686,20 +740,20 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets the clickwrap for an account specified by clickwrapId
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Gets a  single clickwrap object.
+    # Retrieves the definition of the specified clickwrap.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @return [ClickwrapVersionResponse]
     def get_clickwrap(account_id, clickwrap_id)
       data, _status_code, _headers = get_clickwrap_with_http_info(account_id, clickwrap_id)
       return data
     end
 
-    # Gets the clickwrap for an account specified by clickwrapId
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Gets a  single clickwrap object.
+    # Retrieves the definition of the specified clickwrap.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @return [Array<(ClickwrapVersionResponse, Fixnum, Hash)>] ClickwrapVersionResponse data, response status code and response headers
     def get_clickwrap_with_http_info(account_id, clickwrap_id)
       if @api_client.config.debugging
@@ -739,10 +793,10 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets the agreement responses for a clickwrap
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Get user agreements
+    # Retrieves the user agreements for a specified clickwrap. Each `userAgreementResponse` object describes a single user's response to the clickwrap. You can also filter the agreements by date, status, page number, and client user ID.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @param DocuSign_Click::GetClickwrapAgreementsOptions Options for modifying the behavior of the function.
     # @return [ClickwrapAgreementsResponse]
     def get_clickwrap_agreements(account_id, clickwrap_id, options = DocuSign_Click::GetClickwrapAgreementsOptions.default)
@@ -750,10 +804,10 @@ module DocuSign_Click
       return data
     end
 
-    # Gets the agreement responses for a clickwrap
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Get user agreements
+    # Retrieves the user agreements for a specified clickwrap. Each &#x60;userAgreementResponse&#x60; object describes a single user&#39;s response to the clickwrap. You can also filter the agreements by date, status, page number, and client user ID.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @param DocuSign_Click::GetClickwrapAgreementsOptions Options for modifying the behavior of the function.
     # @return [Array<(ClickwrapAgreementsResponse, Fixnum, Hash)>] ClickwrapAgreementsResponse data, response status code and response headers
     def get_clickwrap_agreements_with_http_info(account_id, clickwrap_id, options = DocuSign_Click::GetClickwrapAgreementsOptions.default)
@@ -799,22 +853,22 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets the Clickwrap version by clickwrapId and versionId for an account
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_id 
+    # Gets a specific version of a clickwrap by version ID.
+    # Gets the version specified by `versionId`  from the clickwrap `clickwrapId`.  **Note:** This endpoint requires the version ID (a GUID), not the version number (an integer).  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param version_id The ID of the clickwrap version.
     # @return [ClickwrapVersionResponse]
     def get_clickwrap_version(account_id, clickwrap_id, version_id)
       data, _status_code, _headers = get_clickwrap_version_with_http_info(account_id, clickwrap_id, version_id)
       return data
     end
 
-    # Gets the Clickwrap version by clickwrapId and versionId for an account
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_id 
+    # Gets a specific version of a clickwrap by version ID.
+    # Gets the version specified by &#x60;versionId&#x60;  from the clickwrap &#x60;clickwrapId&#x60;.  **Note:** This endpoint requires the version ID (a GUID), not the version number (an integer).  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param version_id The ID of the clickwrap version.
     # @return [Array<(ClickwrapVersionResponse, Fixnum, Hash)>] ClickwrapVersionResponse data, response status code and response headers
     def get_clickwrap_version_with_http_info(account_id, clickwrap_id, version_id)
       if @api_client.config.debugging
@@ -856,11 +910,11 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets the agreement responses for a clickwrap version
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_id 
+    # Gets the agreement responses for a clickwrap version by version ID.
+    # Gets the agreement responses for a specific version.  **Note:** This endpoint requires the version ID (a GUID), not the version number (an integer).  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param version_id The ID of the clickwrap version.
     # @param DocuSign_Click::GetClickwrapVersionAgreementsOptions Options for modifying the behavior of the function.
     # @return [ClickwrapAgreementsResponse]
     def get_clickwrap_version_agreements(account_id, clickwrap_id, version_id, options = DocuSign_Click::GetClickwrapVersionAgreementsOptions.default)
@@ -868,11 +922,11 @@ module DocuSign_Click
       return data
     end
 
-    # Gets the agreement responses for a clickwrap version
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_id 
+    # Gets the agreement responses for a clickwrap version by version ID.
+    # Gets the agreement responses for a specific version.  **Note:** This endpoint requires the version ID (a GUID), not the version number (an integer).  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param version_id The ID of the clickwrap version.
     # @param DocuSign_Click::GetClickwrapVersionAgreementsOptions Options for modifying the behavior of the function.
     # @return [Array<(ClickwrapAgreementsResponse, Fixnum, Hash)>] ClickwrapAgreementsResponse data, response status code and response headers
     def get_clickwrap_version_agreements_with_http_info(account_id, clickwrap_id, version_id, options = DocuSign_Click::GetClickwrapVersionAgreementsOptions.default)
@@ -920,20 +974,20 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets all the versions of a clickwrap for an account
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Gets all the versions of a clickwrap.
+    # Gets all the versions of a clickwrap for an account.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @return [ClickwrapVersionsPagedResponse]
     def get_clickwrap_versions(account_id, clickwrap_id)
       data, _status_code, _headers = get_clickwrap_versions_with_http_info(account_id, clickwrap_id)
       return data
     end
 
-    # Gets all the versions of a clickwrap for an account
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
+    # Gets all the versions of a clickwrap.
+    # Gets all the versions of a clickwrap for an account.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
     # @return [Array<(ClickwrapVersionsPagedResponse, Fixnum, Hash)>] ClickwrapVersionsPagedResponse data, response status code and response headers
     def get_clickwrap_versions_with_http_info(account_id, clickwrap_id)
       if @api_client.config.debugging
@@ -973,9 +1027,9 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Gets the Clickwraps for an account
-    # 
-    # @param account_id 
+    # Gets all the clickwraps for a user.
+    # Gets all the clickwraps for a user.   **Note:** This endpoint returns a list of `clickwrapVersionSummaryResponse` objects. Each version of each clickwrap is returned as a separate entry in the list.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`. 
+    # @param account_id The external account number (int) or account ID GUID.
     # @param DocuSign_Click::GetClickwrapsOptions Options for modifying the behavior of the function.
     # @return [ClickwrapVersionsResponse]
     def get_clickwraps(account_id, options = DocuSign_Click::GetClickwrapsOptions.default)
@@ -983,9 +1037,9 @@ module DocuSign_Click
       return data
     end
 
-    # Gets the Clickwraps for an account
-    # 
-    # @param account_id 
+    # Gets all the clickwraps for a user.
+    # Gets all the clickwraps for a user.   **Note:** This endpoint returns a list of &#x60;clickwrapVersionSummaryResponse&#x60; objects. Each version of each clickwrap is returned as a separate entry in the list.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;. 
+    # @param account_id The external account number (int) or account ID GUID.
     # @param DocuSign_Click::GetClickwrapsOptions Options for modifying the behavior of the function.
     # @return [Array<(ClickwrapVersionsResponse, Fixnum, Hash)>] ClickwrapVersionsResponse data, response status code and response headers
     def get_clickwraps_with_http_info(account_id, options = DocuSign_Click::GetClickwrapsOptions.default)
@@ -1031,16 +1085,16 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Provides base service and version access information.
-    # 
+    # Gets the current version and other information about the Click API.
+    # The response includes information about the Click API, including the service version, build version, and linked sites.  This method does not require authentication.
     # @return [ServiceInformation]
     def get_service_information()
       data, _status_code, _headers = get_service_information_with_http_info()
       return data
     end
 
-    # Provides base service and version access information.
-    # 
+    # Gets the current version and other information about the Click API.
+    # The response includes information about the Click API, including the service version, build version, and linked sites.  This method does not require authentication.
     # @return [Array<(ServiceInformation, Fixnum, Hash)>] ServiceInformation data, response status code and response headers
     def get_service_information_with_http_info()
       if @api_client.config.debugging
@@ -1076,22 +1130,22 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Updates the clickwrap specified by clickwrapId
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param clickwrap_transfer_request  (optional parameter)
+    # Update a clickwrap by ID.
+    # Update a subset of properties on the clickwrap.  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param clickwrap_transfer_request Data used to transfer a clickwrap from one user to another. (optional parameter)
     # @return [ClickwrapVersionSummaryResponse]
     def update_clickwrap(account_id, clickwrap_id, clickwrap_transfer_request)
       data, _status_code, _headers = update_clickwrap_with_http_info(account_id, clickwrap_id,  clickwrap_transfer_request)
       return data
     end
 
-    # Updates the clickwrap specified by clickwrapId
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param clickwrap_transfer_request  (optional parameter)
+    # Update a clickwrap by ID.
+    # Update a subset of properties on the clickwrap.  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param clickwrap_transfer_request Data used to transfer a clickwrap from one user to another. (optional parameter)
     # @return [Array<(ClickwrapVersionSummaryResponse, Fixnum, Hash)>] ClickwrapVersionSummaryResponse data, response status code and response headers
     def update_clickwrap_with_http_info(account_id, clickwrap_id, clickwrap_transfer_request)
       if @api_client.config.debugging
@@ -1131,24 +1185,24 @@ module DocuSign_Click
       return data, status_code, headers
     end
 
-    # Updates the clickwrap version specified by versionId
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_id 
-    # @param clickwrap_request  (optional parameter)
+    # Updates clickwrap version status and ownership.
+    # Updates the clickwrap version status and ownership by transferring from previous user ID to new user ID.  **Note:** This endpoint requires the version ID (a GUID), not the version number (an integer).  [Required authentication scopes](/docs/click-api/click101/auth/): `click.manage`.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param version_id The ID of the clickwrap version.
+    # @param clickwrap_request Request body for working with clickwrap. (optional parameter)
     # @return [ClickwrapVersionSummaryResponse]
     def update_clickwrap_version(account_id, clickwrap_id, version_id, clickwrap_request)
       data, _status_code, _headers = update_clickwrap_version_with_http_info(account_id, clickwrap_id, version_id,  clickwrap_request)
       return data
     end
 
-    # Updates the clickwrap version specified by versionId
-    # 
-    # @param account_id 
-    # @param clickwrap_id 
-    # @param version_id 
-    # @param clickwrap_request  (optional parameter)
+    # Updates clickwrap version status and ownership.
+    # Updates the clickwrap version status and ownership by transferring from previous user ID to new user ID.  **Note:** This endpoint requires the version ID (a GUID), not the version number (an integer).  [Required authentication scopes](/docs/click-api/click101/auth/): &#x60;click.manage&#x60;.
+    # @param account_id The external account number (int) or account ID GUID.
+    # @param clickwrap_id The ID of the clickwrap.
+    # @param version_id The ID of the clickwrap version.
+    # @param clickwrap_request Request body for working with clickwrap. (optional parameter)
     # @return [Array<(ClickwrapVersionSummaryResponse, Fixnum, Hash)>] ClickwrapVersionSummaryResponse data, response status code and response headers
     def update_clickwrap_version_with_http_info(account_id, clickwrap_id, version_id, clickwrap_request)
       if @api_client.config.debugging
