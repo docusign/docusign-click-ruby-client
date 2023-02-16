@@ -1,7 +1,7 @@
 =begin
 #DocuSign Click API
 
-#DocuSign Click lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable clickwrap solution in your DocuSign integrations.
+#Elastic signing (also known as DocuSign Click)  lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable elastic template solution in your DocuSign integrations.
 
 OpenAPI spec version: v1
 Contact: devcenter@docusign.com
@@ -13,60 +13,67 @@ require 'date'
 
 module DocuSign_Click
   class UserAgreementResponse
-    # 
+    # The external account number (int) or account ID GUID.
     attr_accessor :account_id
 
-    # 
+    # Date that the client last completed the agreement.  This property is null if `agreementUrl` is not null and `status` is not  `agreed`.
     attr_accessor :agreed_on
 
-    # 
+    # The agreement ID.
     attr_accessor :agreement_id
 
-    # 
+    # When not null, an agreement is required for user specified by  `clientUserId`.  When missing the user specified by `clientUserId` has already agreed and does not require a new acceptance.  Use this URL to render the agreement in a web page.  <!-- or redirected to when providing redirect_url as a query parameter. --> 
     attr_accessor :agreement_url
 
-    # 
+    # The ID of the clickwrap.
     attr_accessor :clickwrap_id
 
-    # 
+    # A unique value that identifies a user.\\nYou can use anything that your system uses\\nto identify unique users, such as\\nemployee IDs, email addresses, and surrogate keys as the value of `clientUserId`.\\n\\nA clickwrap with a specific `clientUserId` will not appear again\\nonce it has been accepted.\\n\"
     attr_accessor :client_user_id
 
-    # 
+    # **True** if consumer disclosure was required by this agreement.
     attr_accessor :consumer_disclosure_enabled
 
-    # 
+    # The customer-branded HTML with the Electronic Record and Signature Disclosure information
     attr_accessor :consumer_disclosure_html
 
-    # 
+    # The date when the clickwrap was created. May be null.
     attr_accessor :created_on
 
-    # 
+    # The list of all the data fields available for the clickwrap (custom fields and standard fields).
+    attr_accessor :data_fields
+
+    # The date when the user declined the most recent required agreement.  This property is valid only when `status` is `declined`. Otherwise it is null.
     attr_accessor :declined_on
 
-    # 
+    # This property specifies the data used to create a clickwrap with [dynamic content][].    [dynamic content]: /docs/click-api/click101/customize-clickwrap-fields/#embed-clickwraps-that-contain-dynamic-content 
     attr_accessor :document_data
 
-    # 
+    # An array of documents.
     attr_accessor :documents
 
-    # 
+    # A customer-defined string you can use in requests. This string will appear in the corresponding response.
     attr_accessor :metadata
 
+    # The URL redirected to after the agreement was completed.
+    attr_accessor :return_url
+
+    # The display settings for this agreement.
     attr_accessor :settings
 
-    # 
+    # User agreement status. One of:  - `created` - `agreed` - `declined`
     attr_accessor :status
 
-    # 
+    # This property specifies the custom style provided when the agreement was created by [customizing the template appearance][].    [customizing the template appearance]: /docs/click-api/click101/customize-elastic-template-appearance/ 
     attr_accessor :style
 
-    # 
+    # The human-readable semver version string.
     attr_accessor :version
 
-    # 
+    # The ID of the version.
     attr_accessor :version_id
 
-    # 
+    # Version of the clickwrap.
     attr_accessor :version_number
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -81,10 +88,12 @@ module DocuSign_Click
         :'consumer_disclosure_enabled' => :'consumerDisclosureEnabled',
         :'consumer_disclosure_html' => :'consumerDisclosureHtml',
         :'created_on' => :'createdOn',
+        :'data_fields' => :'dataFields',
         :'declined_on' => :'declinedOn',
         :'document_data' => :'documentData',
         :'documents' => :'documents',
         :'metadata' => :'metadata',
+        :'return_url' => :'returnUrl',
         :'settings' => :'settings',
         :'status' => :'status',
         :'style' => :'style',
@@ -106,10 +115,12 @@ module DocuSign_Click
         :'consumer_disclosure_enabled' => :'BOOLEAN',
         :'consumer_disclosure_html' => :'String',
         :'created_on' => :'Object',
+        :'data_fields' => :'Array<DataField>',
         :'declined_on' => :'Object',
         :'document_data' => :'Hash<String, String>',
         :'documents' => :'Array<Document>',
         :'metadata' => :'String',
+        :'return_url' => :'String',
         :'settings' => :'DisplaySettings',
         :'status' => :'String',
         :'style' => :'Hash<String, String>',
@@ -163,6 +174,12 @@ module DocuSign_Click
         self.created_on = attributes[:'createdOn']
       end
 
+      if attributes.has_key?(:'dataFields')
+        if (value = attributes[:'dataFields']).is_a?(Array)
+          self.data_fields = value
+        end
+      end
+
       if attributes.has_key?(:'declinedOn')
         self.declined_on = attributes[:'declinedOn']
       end
@@ -181,6 +198,10 @@ module DocuSign_Click
 
       if attributes.has_key?(:'metadata')
         self.metadata = attributes[:'metadata']
+      end
+
+      if attributes.has_key?(:'returnUrl')
+        self.return_url = attributes[:'returnUrl']
       end
 
       if attributes.has_key?(:'settings')
@@ -237,10 +258,12 @@ module DocuSign_Click
           consumer_disclosure_enabled == o.consumer_disclosure_enabled &&
           consumer_disclosure_html == o.consumer_disclosure_html &&
           created_on == o.created_on &&
+          data_fields == o.data_fields &&
           declined_on == o.declined_on &&
           document_data == o.document_data &&
           documents == o.documents &&
           metadata == o.metadata &&
+          return_url == o.return_url &&
           settings == o.settings &&
           status == o.status &&
           style == o.style &&
@@ -258,7 +281,7 @@ module DocuSign_Click
     # Calculates hash code according to all attributes.
     # @return [Fixnum] Hash code
     def hash
-      [account_id, agreed_on, agreement_id, agreement_url, clickwrap_id, client_user_id, consumer_disclosure_enabled, consumer_disclosure_html, created_on, declined_on, document_data, documents, metadata, settings, status, style, version, version_id, version_number].hash
+      [account_id, agreed_on, agreement_id, agreement_url, clickwrap_id, client_user_id, consumer_disclosure_enabled, consumer_disclosure_html, created_on, data_fields, declined_on, document_data, documents, metadata, return_url, settings, status, style, version, version_id, version_number].hash
     end
 
     # Builds the object from hash

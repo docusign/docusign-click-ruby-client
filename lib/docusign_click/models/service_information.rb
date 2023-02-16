@@ -1,7 +1,7 @@
 =begin
 #DocuSign Click API
 
-#DocuSign Click lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable clickwrap solution in your DocuSign integrations.
+#Elastic signing (also known as DocuSign Click)  lets you capture consent to standard agreement terms with a single click: terms and conditions, terms of service, terms of use, privacy policies, and more. The Click API lets you include this customizable elastic template solution in your DocuSign integrations.
 
 OpenAPI spec version: v1
 Contact: devcenter@docusign.com
@@ -13,22 +13,22 @@ require 'date'
 
 module DocuSign_Click
   class ServiceInformation
-    # 
+    # The internal source control branch.
     attr_accessor :build_branch
 
-    # 
+    # The date-time this branch was deployed.
     attr_accessor :build_branch_deployed_date_time
 
-    # 
+    # The internal source control SHA.
     attr_accessor :build_sha
 
-    # 
+    # The internal build version information.
     attr_accessor :build_version
 
-    # 
+    # An array of URLs (strings) of related sites.
     attr_accessor :linked_sites
 
-    # 
+    # An array of `serviceVersion` objects.
     attr_accessor :service_versions
 
     # Attribute mapping from ruby-style variable name to JSON key.
