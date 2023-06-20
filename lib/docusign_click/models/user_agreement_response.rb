@@ -64,7 +64,6 @@ module DocuSign_Click
     # User agreement status. One of:  - `created` - `agreed` - `declined`
     attr_accessor :status
 
-    # This property specifies the custom style provided when the agreement was created by [customizing the template appearance][].    [customizing the template appearance]: /docs/click-api/click101/customize-elastic-template-appearance/ 
     attr_accessor :style
 
     # The human-readable semver version string.
@@ -123,7 +122,7 @@ module DocuSign_Click
         :'return_url' => :'String',
         :'settings' => :'DisplaySettings',
         :'status' => :'String',
-        :'style' => :'Hash<String, String>',
+        :'style' => :'UserAgreementResponseStyle',
         :'version' => :'String',
         :'version_id' => :'String',
         :'version_number' => :'Integer'
@@ -213,9 +212,7 @@ module DocuSign_Click
       end
 
       if attributes.has_key?(:'style')
-        if (value = attributes[:'style']).is_a?(Hash)
-          self.style = value
-        end
+        self.style = attributes[:'style']
       end
 
       if attributes.has_key?(:'version')
